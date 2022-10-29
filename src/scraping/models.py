@@ -12,7 +12,8 @@ class Film(models.Model):
     )
     slug = models.CharField(
         max_length=48,
-        blank=True
+        blank=True,
+        unique=True
     )
     
     class Meta:
