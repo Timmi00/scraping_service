@@ -1,7 +1,11 @@
 from django.db import models
+from pytils.translit import slugify
 
 
 class Film(models.Model):
+    # url = models.URLField(
+    #     unique=True
+    # )
     film_name = models.CharField(
         max_length=48,
         verbose_name='Название фильма'
@@ -10,12 +14,21 @@ class Film(models.Model):
         verbose_name='id фильма на кинопоиске',
         unique=True
     )
+    description = models.TextField(
+        verbose_name='Описание',
+        blank=True
+    )
+    stuffs = models.ForeignKey(
+        'Staff',
+        on_delete=models.CASCADE,
+        default=None
+    )
     slug = models.CharField(
         max_length=48,
         blank=True,
         unique=True
     )
-    
+
     class Meta:
         verbose_name = 'Название фильма'
         verbose_name_plural = 'Фильмы'
@@ -23,11 +36,16 @@ class Film(models.Model):
     def __str__(self):
         return self.film_name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.film_name)
+        super().save(*args, **kwargs)
+
 
 class Staff(models.Model):
-    staff_role = models.CharField(
-        max_length=48,
-        verbose_name='Должность'
+    staff_role = models.ManyToManyField(
+        'Profession',
+        default=None
     )
     staff_name = models.CharField(
         max_length=48,
@@ -39,7 +57,8 @@ class Staff(models.Model):
     )
     slug = models.CharField(
         max_length=48,
-        blank=True
+        blank=True,
+        unique=True
     )
 
     class Meta:
@@ -48,3 +67,21 @@ class Staff(models.Model):
 
     def __str__(self):
         return self.staff_name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.staff_name)
+        super().save(*args, **kwargs)
+
+
+class Profession(models.Model):
+    profession = models.CharField(
+        max_length=48
+    )
+
+    class Meta:
+        verbose_name = 'Профессия'
+        verbose_name_plural = 'Профессии'
+
+    def __str__(self):
+        return self.profession

@@ -32,7 +32,7 @@ def get_films_by_actor_id(actor_id: str):
         )
         print(response.json())
         for films in response.json()['films']:
-            if films['nameRu'] == None:
+            if films['nameRu'] is None:
                 print('id:', films['filmId'], ' название:', films['nameEn'])
             else:
                 print('id:', films['filmId'], ' название:', films['nameRu'])
@@ -47,6 +47,6 @@ def get_film_id(filmId):
         return response.json()
 
 
-# get_actor_id()
+get_actor_id()
 # get_film_id(str(input(507)))
-get_films_by_actor_id(input('Введи ид актера '))
+# get_films_by_actor_id(input('Введи ид актера '))
