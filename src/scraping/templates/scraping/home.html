@@ -1,27 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<!--<form method="GET" action="">-->
-<!--  <label >Введите название фильма:</label><br>-->
-<!--  <label>-->
-<!--    <input type="text" name="fname" value="Название фильма">-->
-<!--  </label><br>-->
-<!--  <input type="submit" value="Submit">-->
-<!--</form>-->
-<!--<form action="https://www.kinopoisk.ru/index.php?">-->
-<!--  <label for="fname"> Введите название фильма:</label><br>-->
-<!--  <input type="text" id="fname" name="kp_query" value="Название фильма"><br>-->
-<!--  <input type="submit" value="Submit">-->
-<!--</form>-->
-{% for object in object_list %}
-    <div class="card my-4" style="width: 28rem;">
-  <img src="{{ object.film_poster }}" class="card-img-top" alt="{{ object.film_poster }}">
-    <div class="card-body">
-    <h5 class="card-header"><a href="{{ object.url }}">{{ object.film_name }}</a></h5>
-    <p class="card-text">{{ object.description }}</p>
-        <p>{{ object.stuffs.staff_role }} | {{ object.stuffs.staff_name}}</p>
-    </div>
-    </div>
-{% endfor %}
 <div class="row">
     <div class="col-md-6 mx-auto">
         <form method="GET" action="">
@@ -32,6 +10,31 @@
 </form>
     </div>
 </div>
+<!--<form method="GET" action="">-->
+<!--  <label >Введите название фильма:</label><br>-->
+<!--  <label>-->
+<!--    <input type="text" name="fname" value="Название фильма">-->
+<!--  </label><br>-->
+<!--  <input type="submit" value="Submit">-->
+{% for object in object_list %}
+    <div class="card my-4 mx-auto" style="width: 23rem;">
+  <img src="media/{{ object.film_poster }}" class="card-img-top" alt="{{ object.film_poster }}">
+    <div class="card-body">
+    <h5 class="card-header"><a href="{{ object.url }}">{{ object.film_name }}</a></h5>
+    <p class="card-text">{{ object.description }}</p>
+        <p>{{ object.stuffs.staff_role }} | {{ object.stuffs.staff_name}}</p>
+    </div>
+    </div>
+{% endfor %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+</form>
+<form action="https://www.kinopoisk.ru/index.php?">
+<label for="fname"> Введите название фильма:</label><br>
+<input type="text" id="fname" name="kp_query" value="Название фильма"><br>
+<input type="submit" value="Submit">
+</form>
+    </div>
 <!--<form method="POST" action=""> {% csrf_token %}-->
 <!--  <label >Введите название фильма:</label><br>-->
 <!--  <input type="text" name="kp_query" value="Название фильма"><br>-->
