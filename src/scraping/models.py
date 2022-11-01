@@ -3,9 +3,10 @@ from pytils.translit import slugify
 
 
 class Film(models.Model):
-    # url = models.URLField(
-    #     unique=True
-    # )
+    url = models.URLField(
+        unique=True,
+        blank=True
+    )
     film_name = models.CharField(
         max_length=48,
         verbose_name='Название фильма'
@@ -22,6 +23,11 @@ class Film(models.Model):
         'Staff',
         on_delete=models.CASCADE,
         default=None
+    )
+    film_poster = models.ImageField(
+        verbose_name='Постер',
+        upload_to='images',
+        blank=True
     )
     slug = models.CharField(
         max_length=48,
@@ -43,9 +49,10 @@ class Film(models.Model):
 
 
 class Staff(models.Model):
-    staff_role = models.ManyToManyField(
+    staff_role = models.ForeignKey(
         'Profession',
-        default=None
+        default=None,
+        on_delete=models.CASCADE
     )
     staff_name = models.CharField(
         max_length=48,
